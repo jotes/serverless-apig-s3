@@ -133,7 +133,8 @@ module.exports = class ServerlessApigS3 extends ServerlessAWSPlugin {
                 existing[key]['DependsOn'].push('ApiGatewayMethodAssetsIndexDefault');
             }
         }
-
+        let ownDeployment = ownResources['Resources']['ApiGatewayDeploymentS3IntegrationDeployment'];
+        ownDeployment['Properties']['StageName'] = this.stage;
         merge(existing, ownResources);
     }
 
