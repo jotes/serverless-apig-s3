@@ -1,4 +1,4 @@
-Resources:
+R.typeesources:
   S3BucketFrontEnd:
     Type: AWS::S3::Bucket
     Properties:
@@ -30,6 +30,13 @@ Resources:
                   - "s3:get*"
                   - "s3:list*"
                 Resource: "*"
+  ApiGatewayDeploymentS3IntegrationDeployment:
+      Type: AWS::ApiGateway::Deployment
+      Properties:
+          RestApiId: !Ref ApiGatewayRestApi
+      DependsOn:
+          - ApiGatewayMethodAssetsIndexDefault
+          - ApiGatewayMethodAssetsItemGet
   ApiGatewayResourceDefaultRoute:
       Type: AWS::ApiGateway::Resource
       Properties:
