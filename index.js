@@ -127,7 +127,7 @@ module.exports = class ServerlessApigS3 extends ServerlessAWSPlugin {
 
         ownResources[ "Resources" ][ "IamRoleApiGatewayS3" ] = this.updateIamRoleAndPolicyNames(ownResources[ "Resources" ][ "IamRoleApiGatewayS3" ], this.stage);
         for(let key in existing) {
-            if (existing[key].type === 'AWS::ApiGateway::Deployment') {
+            if (existing[key]['Type'] === 'AWS::ApiGateway::Deployment') {
                 // update dependsOn
                 existing[key]['DependsOn'].push('ApiGatewayMethodAssetsItemGet');
                 existing[key]['DependsOn'].push('ApiGatewayMethodAssetsIndexDefault');
