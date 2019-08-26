@@ -1,4 +1,4 @@
-R.typeesources:
+Resources:
   S3BucketFrontEnd:
     Type: AWS::S3::Bucket
     Properties:
