@@ -37,7 +37,8 @@ module.exports = class ServerlessApigS3 extends ServerlessAWSPlugin {
         this.hooks = {
             'before:package:createDeploymentArtifacts': () => { this.updatePopulatedMembers(); this.mergeApigS3Resources(); },
             'client:client': () => { this.serverless.cli.log(this.commands.client.usage); },
-            'client:deploy:deploy': () => this.deploy()
+            'client:deploy:deploy': () => this.deploy(),
+            'remove:remove': () => this.remove(),
         };
 
         Object.assign(this,
@@ -151,5 +152,14 @@ module.exports = class ServerlessApigS3 extends ServerlessAWSPlugin {
         this.log('uploading content...');
         await this.uploadFolderToBucket(this.clientPath, this.bucketName);
         this.log('Deployment complete.');
+    }
+
+    async remove() {
+        this.getDistFolder();
+        await this.getBucketName();
+        this.log('emptying current bucket contents...');
+
+        await this.purgeBucket(this.bucketName);
+        this.log('Teardown complete.');
     }
 };
